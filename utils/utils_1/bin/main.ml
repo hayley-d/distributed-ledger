@@ -85,15 +85,15 @@ let advanced_run_length_encoding lst =
              else Many (count +1,x) :: acc (* add the run to the accumulator *)
     | a :: (b :: _ as t) -> if a = b then aux (count + 1) acc t 
                             else let current_element = if count = 0 then One a else Many (count + 1,a)
-                                in aux 0 (current_element :: axx) t
+                                in aux 0 (current_element :: acc) t
   in
   List.rev (aux 0 [] lst)
  
 let duplicate_elem lst =
   let rec aux acc = function
     | [] -> []
-    | [x] -> [x;x] :: acc
-    | a :: tail -> aux ([a;a] :: acc) tail
+    | [x] -> x :: x :: acc
+    | a :: tail -> aux (a :: a :: acc) tail
   in
   aux [] lst
 
