@@ -64,6 +64,15 @@ let rev_list lst =
   in
     aux [] lst 
 
+(* Finds the run length encoding of the input list *)
+let run_length_encoding lst = 
+  let rec aux count acc = function
+    | [] -> [] (* If an empty list then output an empty list *)
+    | [x] -> (count + 1, x) :: acc  (* If a single element -> increment count of element *)
+    | a :: (b :: _ as t) -> if a = b then aux (count + 1) acc t  (* If a == b then increment variable count and check the list *)
+                            else aux 0 ((count + 1, a) :: acc) t in (* If a != b then add count of variable to the return list *)
+  List.rev (aux 0 [] lst)
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
