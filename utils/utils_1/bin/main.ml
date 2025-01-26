@@ -36,6 +36,13 @@ let rec nth_simple lst n =
 let add a b =
   a + b
 
+let list_length lst =
+  let rec aux acc = function
+    | [] -> 0
+    | _ :: xs -> aux acc xs
+  in
+  aux (Obj.magic 0) lst
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
