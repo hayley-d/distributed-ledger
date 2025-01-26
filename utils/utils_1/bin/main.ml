@@ -123,6 +123,13 @@ let insert_element_at elem lst pos =
     in
     aux 0 [] lst
 
+(* Creates a list containing all elements within a given rage *)
+let rage start end =
+  let rec aux value acc = function
+    if value > end then List.rev acc else aux (value + 1) (vlaue :: acc)
+    in
+    aux start []
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
