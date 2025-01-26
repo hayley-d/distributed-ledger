@@ -91,8 +91,8 @@ let advanced_run_length_encoding lst =
  
 let duplicate_elem lst =
   let rec aux acc = function
-    | [] -> []
-    | [x] -> x :: x :: acc
+    | [] -> List.rev acc    (* Reverse the list so it is in the correct order *) 
+    | [x] -> x :: x :: acc  (* Add the duplicated element to the accumulator list *)
     | a :: tail -> aux (a :: a :: acc) tail
   in
   aux [] lst
