@@ -6,7 +6,12 @@ let last_rev lst =
 
 
 let is_palindrome lst =
-  List.rev == lst
+  let rec aux acc = function
+    | [] -> true
+    | [_] -> true
+    | head :: tail -> if head = List.hd (List.rev tail) then aux acc t else false
+  in
+  aux [] lst
 
 (* Recursive approach *)
 let rec last_recursive = function
