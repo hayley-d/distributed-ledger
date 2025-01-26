@@ -38,7 +38,7 @@ let add a b =
 
 let list_length lst =
   let rec aux acc = function
-    | [] -> 0
+    | [] -> acc 
     | _ :: xs -> aux acc xs
   in
   aux (Obj.magic 0) lst
