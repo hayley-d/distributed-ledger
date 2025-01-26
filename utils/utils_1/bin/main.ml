@@ -69,8 +69,8 @@ let run_length_encoding lst =
   let rec aux count acc = function
     | [] -> [] (* If an empty list then output an empty list *)
     | [x] -> (count + 1, x) :: acc  (* If a single element -> increment count of element *)
-    | a :: (b :: _ as t) -> if a = b then aux (count + 1) acc t  (* If a == b then increment variable count and check the list *)
-                            else aux 0 ((count + 1, a) :: acc) t in (* If a != b then add count of variable to the return list *)
+    | a :: (b :: _ as t) -> if a = b then aux (count + 1) acc t  (* If the fist two elements are the same increment the count and continue with the rest of the list *)
+                            else aux 0 ((count + 1, a) :: acc) t in (* If the first two elements are NOT the same add the current run to the accumulator and reset the count to 0*)
   List.rev (aux 0 [] lst)
 
 let () =
