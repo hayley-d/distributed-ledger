@@ -106,6 +106,14 @@ let split_list lst length =
     in 
     aux 0 ([],[]) lst
 
+(* Removes the element at target index from the list *)
+let remove_nth_element lst target = 
+  let rec aux index acc = function
+    | [] -> List.rev acc
+    | a :: tail -> if index == target then aux (index + 1) acc tail else aux (index + 1) (a :: acc) tail
+  in
+  aux 0 [] lst
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
