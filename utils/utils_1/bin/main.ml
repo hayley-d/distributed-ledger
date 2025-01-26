@@ -104,7 +104,7 @@ let split_list lst length =
     | a :: tail -> if count >= length then aux (count + 1) (first, a :: second) tail
                    else aux (count + 1) (a :: first, second) tail
     in 
-    aux (Obj.magic 0) ([],[]) lst
+    aux 0 ([],[]) lst
 
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
