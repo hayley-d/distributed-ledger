@@ -43,6 +43,14 @@ let list_length lst =
   in
   aux (Obj.magic 0) lst
 
+(* Reverses a list can simply use List.rev *)
+let rev_list lst = 
+  let rec aux acc = function    (* Create an inner recursive function called aux) *)
+    | [] -> acc                 (* Base case: empty list *)
+    | head :: tail -> aux (head :: acc) tail (* Recursive case: *)
+  in
+    aux [] lst 
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
