@@ -29,4 +29,5 @@ let () =
   assert (last_tail_recursive [1; 2; 3; 4] = Some 4);
   assert (last_tail_recursive ["a"; "b"; "c"] = Some "c");
   assert (last_tail_recursive [] = None);
+  print_endline "All tests passed!"
 
