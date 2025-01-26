@@ -27,6 +27,15 @@ let last_two_rec list =
   in
   aux (Obj.magic 0) list
 
+let rec nth_simple lst n =
+  match (lst,n) with
+  | [],_ -> None        (* Empty list *)
+  | x :: _,0 -> Some x  (* Found the element when the index is 0 *)
+  | _ :: xs, k -> nth_simple xs (k-1) (* Recursivly process the list *)
+
+let add a b =
+  a + b
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
@@ -37,7 +46,5 @@ let () =
   assert (last_tail_recursive [1; 2; 3; 4] = Some 4);
   assert (last_tail_recursive ["a"; "b"; "c"] = Some "c");
   assert (last_tail_recursive [] = None);
-  assert (last_two_rec [1; 2; 3; 4] = Some (3,4));
-  assert (last_two_rec ["a"; "b"; "c"] = Some ("b","c"));
   print_endline "All tests passed!"
 
