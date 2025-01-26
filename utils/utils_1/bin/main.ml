@@ -4,6 +4,10 @@ let last_rev lst =
   | [] -> None      (* Empty list returns None *)
   | hd :: _ -> Some hd  (* First element of reversed list is the last of original *)
 
+
+let is_palindrome lst =
+  List.rev == lst
+
 (* Recursive approach *)
 let rec last_recursive = function
   | [] -> None      (* Empty list returns None *)
