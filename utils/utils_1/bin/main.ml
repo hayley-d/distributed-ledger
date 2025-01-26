@@ -89,6 +89,13 @@ let advanced_run_length_encoding lst =
   in
   List.rev (aux 0 [] lst)
  
+let duplicate_elem lst =
+  let rec aux acc = function
+    | [] -> []
+    | [x] -> [x;x] :: acc
+    | a :: tail -> aux [a;a] :: tail
+  in
+  aux [] lst
 
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
