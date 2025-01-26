@@ -9,9 +9,13 @@ let is_palindrome lst =
   let rec aux acc = function
     | [] -> true
     | [_] -> true
-    | head :: tail -> if head = List.hd (List.rev tail) then aux acc t else false
+    | head :: tail -> if head = List.hd (List.rev tail) then aux acc tail else false
   in
   aux [] lst
+
+let simple_is_palindrome lst =
+  lst = List.rev lst
+
 
 (* Recursive approach *)
 let rec last_recursive = function
