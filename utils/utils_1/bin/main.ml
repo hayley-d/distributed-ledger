@@ -93,7 +93,7 @@ let duplicate_elem lst =
   let rec aux acc = function
     | [] -> []
     | [x] -> [x;x] :: acc
-    | a :: tail -> aux [a;a] :: tail
+    | a :: tail -> aux ([a;a] :: acc) tail
   in
   aux [] lst
 
