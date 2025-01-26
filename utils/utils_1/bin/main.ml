@@ -19,6 +19,14 @@ let last_tail_recursive lst =
   in
   aux (Obj.magic 0) lst  (* Initial accumulator is a dummy value *)
 
+let last_two_rec list = 
+  let rec aux accumulator = function
+    | [] -> None
+    | [x,y] -> Some (x,y)
+    | _ :: rem -> aux accumulator rem
+  in
+  aux (Obj.magic 0) list
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
@@ -29,5 +37,7 @@ let () =
   assert (last_tail_recursive [1; 2; 3; 4] = Some 4);
   assert (last_tail_recursive ["a"; "b"; "c"] = Some "c");
   assert (last_tail_recursive [] = None);
+  assert (last_two_rec [1; 2; 3; 4] = Some (3,4));
+  assert (last_two_rec ["a"; "b"; "c"] = Some ("b","c"));
   print_endline "All tests passed!"
 
