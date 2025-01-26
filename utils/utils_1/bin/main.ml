@@ -114,6 +114,15 @@ let remove_nth_element lst target =
   in
   aux 0 [] lst
 
+(* Insert an element at a given position *)
+let insert_element_at elem lst pos =
+  let rec aux count acc = function
+    | [] -> if count = pos then List.rev (elem :: acc) else List.rev acc
+    | [a] -> if count = pos then elem :: a :: acc else a :: acc
+    | a :: tail -> if count = post then aux (count + 1) (elem :: a :: acc) tail else aux (count + 1) (a :: acc) tail
+    in
+    aux 0 [] lst
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
