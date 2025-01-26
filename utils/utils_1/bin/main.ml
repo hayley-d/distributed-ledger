@@ -97,6 +97,11 @@ let duplicate_elem lst =
   in
   aux [] lst
 
+let split_list lst length = 
+  let rec aux count acc = function
+    | [] -> acc 
+    | [x] -> if count >= length 
+    | a :: tail -> if count = length then 
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
