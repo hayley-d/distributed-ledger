@@ -124,9 +124,9 @@ let insert_element_at elem lst pos =
     aux 0 [] lst
 
 (* Creates a list containing all elements within a given rage *)
-let rage start end =
-  let rec aux value acc = function
-    if value > end then List.rev acc else aux (value + 1) (vlaue :: acc)
+let rage start end_val =
+  let rec aux value acc = 
+    if value > end_val then List.rev acc else aux (value + 1) (value :: acc)
     in
     aux start []
 
