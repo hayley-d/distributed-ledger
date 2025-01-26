@@ -98,10 +98,14 @@ let duplicate_elem lst =
   aux [] lst
 
 let split_list lst length = 
-  let rec aux count acc = function
-    | [] -> acc 
-    | [x] -> if count >= length 
-    | a :: tail -> if count = length then 
+  let rec aux count (first,second) = function
+    | [] -> (List.rev first, List.rev second) 
+    | [x] -> if count >= length then (first, x :: second) else (x :: first,second)
+    | a :: tail -> if count >= length then aux (count + 1) (first, a :: second) tail
+                   else aux (count + 1) (a :: first, second) tail
+    in 
+    aux (Obj.magic 0) ([],[]) lst
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
