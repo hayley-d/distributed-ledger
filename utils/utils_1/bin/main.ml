@@ -73,6 +73,23 @@ let run_length_encoding lst =
                             else aux 0 ((count + 1, a) :: acc) t in (* If the first two elements are NOT the same add the current run to the accumulator and reset the count to 0*)
   List.rev (aux 0 [] lst)
 
+(* Define a custom type to handle both single elements and runs *)
+type 'a run = 
+    | One of 'a         (* A single elemnt of any type *)
+    | Many of (int * 'a) (* A run of repetead elements *)
+
+let advanced_run_length_encoding lst =
+  let rec aux count acc = function
+    | [] -> [] (* Empty list *)
+    | [x] -> if count == 0 then One x :: acc
+             else Many (count +1,x) :: acc (* add the run to the accumulator *)
+    | a :: (b :: _ as t) -> if a = b then aux (count + 1) acc t 
+                            else let current_element = if count = 0 then One a else Many (count + 1,a)
+                                in aux 0 (current_element :: axx) t
+  in
+  List.rev (aux 0 [] lst)
+ 
+
 let () =
   assert (last_recursive [1; 2; 3; 4] = Some 4);
   assert (last_recursive ["a"; "b"; "c"] = Some "c");
