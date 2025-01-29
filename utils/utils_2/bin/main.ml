@@ -6,4 +6,17 @@ let count_elem lst x =
     in
     aux 0 lst
 
+
+(* A function that applies a function to evey third element *)
+let basic_foo x = x * 5
+
+let transform_thrid foo lst = 
+    let rec aux acc = function
+        | a::b::c:: t -> aux (basic_foo c)::acc
+        |_ -> List.rev acc
+    in
+    aux [] lst
+
+    
 let () = Printf.printf "%d\n" (count_elem [1;2;1;3;1] 1)
+
