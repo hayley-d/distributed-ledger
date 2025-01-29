@@ -8,13 +8,13 @@ let count_elem lst x =
 
 
 (* A function that applies a function to evey third element *)
-let basic_foo x = x * 5
+let basic_foo (x:int) : int = x * 5
 
-let transform_thrid foo lst = 
-    let rec aux acc = function
+let transform_third (foo: int -> int) (lst: int list) : int list = 
+    let rec aux (acc: int list) = function
         | a::b::c::t -> aux (a::b::(foo c)::acc) t
-        | [a;b] -> List.rev (b::a::acc) (* Handle the remaining elements *)
-        | [a] -> List.rev a::acc (* Handle the remaining elements *)
+        | [a;b] -> List.rev (a::b::acc) (* Handle the remaining elements *)
+        | [a] -> List.rev (a::acc) (* Handle the remaining elements *)
         | [] -> List.rev acc (* Handle the remaining elements *)
 
     in
@@ -27,11 +27,11 @@ let () =
 
     (* Test transform_third *)
     let test_list = [1;2;3;4;5;6;7;8;9] in
-    let result = transform_thrid basic_foo test_list in
+    let result = transform_third basic_foo test_list in
     Printf.printf "transform_third test: \nOriginal list: ";
-    List.iter (Printf.printf "%d") test_list;
+    List.iter (Printf.printf "%d ") test_list;
     Printf.printf "\nTransformed list: ";
-    List.iter (Printf.printf "%d") result ;
+    List.iter (Printf.printf "%d ") result ;
     Printf.printf "\n"
 
 
