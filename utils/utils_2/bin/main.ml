@@ -12,8 +12,8 @@ let basic_foo x = x * 5
 
 let transform_thrid foo lst = 
     let rec aux acc = function
-        | a::b::c::t -> let x = foo c; aux (a::b::x::acc) t
-        | [a;b] -> List.rev a::b::acc (* Handle the remaining elements *)
+        | a::b::c::t -> aux (a::b::(foo c)::acc) t
+        | [a;b] -> List.rev (b::a::acc) (* Handle the remaining elements *)
         | [a] -> List.rev a::acc (* Handle the remaining elements *)
         | [] -> List.rev acc (* Handle the remaining elements *)
 
