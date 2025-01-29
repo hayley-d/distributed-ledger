@@ -6,4 +6,4 @@ let count_elem lst x =
     in
     aux 0 lst
 
-let () = count_elem [1;2;1;3;1] 1
+let () = Printf.printf "%d\n" (count_elem [1;2;1;3;1] 1)
