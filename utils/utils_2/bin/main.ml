@@ -20,15 +20,15 @@ let transform_thrid foo lst =
     
 let () = 
     (* test count_elem *)
-    let test1 = count_elem [1;2;1;3;1] 1 in Printf.printf "count_elem test: found %d occurrences of 1\n" test1;
+    let test1 = count_elem [1;2;1;3;1] 1 in Printf.printf "count_elem test: found %d occurrences of 1\n" test1;;
 
     (* Test transform_third *)
     let test_list = [1;2;3;4;5;6;7;8;9] in
-    let result = transform_third basic_foo test_list in
-    Printf.printf "transform_third test: \nOriginal list: ";;
-    List.iter (Printf.printf "%d") test_list;;
-    Printf.printf "\nTransformed list: ";;
-    List.iter (Printf.printf "%d") result;;
+    let result = transform_thrid basic_foo test_list in
+    Printf.printf "transform_third test: \nOriginal list: ";
+    List.iter (Printf.printf "%d") test_list;
+    Printf.printf "\nTransformed list: ";
+    List.iter (Printf.printf "%d") result ;
     Printf.printf "\n"
 
 
