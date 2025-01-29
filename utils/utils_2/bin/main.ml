@@ -12,7 +12,7 @@ let basic_foo x = x * 5
 
 let transform_thrid foo lst = 
     let rec aux acc = function
-        | a::b::c::t -> aux (a::b::(basic_foo c)::acc) t
+        | a::b::c::t -> aux (a::b::(foo c)::acc) t
         | remaining -> List.rev_append acc remaining (* Handle the remaining elements *)
     in
     aux [] lst
