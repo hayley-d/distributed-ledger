@@ -12,8 +12,8 @@ let basic_foo (x:int) : int = x * 5
 
 let transform_third (foo: int -> int) (lst: int list) : int list = 
     let rec aux (acc: int list) = function
-        | a::b::c::t -> aux (a::b::(foo c)::acc) t
-        | [a;b] -> List.rev (a::b::acc) (* Handle the remaining elements *)
+        | a::b::c::t -> aux ((foo c)::b::a::acc) t
+        | [a;b] -> List.rev (b::a::acc) (* Handle the remaining elements *)
         | [a] -> List.rev (a::acc) (* Handle the remaining elements *)
         | [] -> List.rev acc (* Handle the remaining elements *)
 
