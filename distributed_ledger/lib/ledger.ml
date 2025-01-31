@@ -27,3 +27,25 @@ let add_transaction ledger tx =
 (* Check if a transaction exists *)
 let transaction_exists ledger tx_id =
     StringMap.mem tx_id ledger.transactions
+
+(* Get a transaction by ID *)
+let get_transaction ledger tx_id =
+    StringMap.find_opt tx_id ledger.transactions
+
+(* Get parent transactions *)
+let get_parents ledger tx =
+    List.filter_map (fun id -> get_transaction ledger id) tx.parents
+
+(* Get child transactions *)
+let get_children ledger tx_id =
+    match StringMap.find_opt tx_id ledger.references with
+    | Some children -> List.filter_map (fun id -> get_transaction ledger id) children
+    | None -> []
+
+
+(* Perform a traversal for validation *)
+let validate_transaction ledger tx =
+    List.for_all (transaction_exists ledger) tx.parents
+
+
+
