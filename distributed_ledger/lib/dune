@@ -1,2 +1,5 @@
 (library
- (name distributed_ledger))
+ (name distributed_dag_blockchain)
+ (public_name distributed_dag_blockchain)
+ (libraries grpc-lwt digestif lwt rocksdb)
+ )
