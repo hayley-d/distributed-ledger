@@ -8,10 +8,10 @@ The system can be used in applications requiring strong consistency and reliabil
 
 
 ## Features:
-- **Cryptography: **Blockchain transactions are verified and trustworthy because of complex computations and cryptographic proof between the parties.
-- **Immutability: **Records in a blockchain can’t be modified or deleted.
-- **Provenance: **It’s possible to trace the origin of each transaction in the blockchain ledger.
-- **Decentralization: ** Every member of the blockchain structure is able to access the entire distributed database.
+- **Cryptography:** Blockchain transactions are verified and trustworthy because of complex computations and cryptographic proof between the parties.
+- **Immutability:** Records in a blockchain can’t be modified or deleted.
+- **Provenance:** It’s possible to trace the origin of each transaction in the blockchain ledger.
+- **Decentralization:** Every member of the blockchain structure is able to access the entire distributed database.
 - **Distributed Consensus**: Implements a consensus algorithm to ensure that events are consistently applied across all nodes in a distributed environment.
 - **Fault Tolerance**: Designed to handle node failures gracefully, with mechanisms for recovering and maintaining consistency without losing data.
 - **Scalable Architecture**: The system is designed to scale horizontally to handle high throughput and large datasets in a distributed environment.
