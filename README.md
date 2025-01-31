@@ -1,13 +1,17 @@
 <p><a target="_blank" href="https://app.eraser.io/workspace/D2SvVYOv2VemDF6vPB5Q" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
-# Distributed Ledger with Event Sourcing
-The Distributed Ledger is designed to implement an event-driven system that guarantees data integrity, high availability, and fault tolerance using a distributed ledger and event sourcing techniques. The system allows for the immutability of events and ensures that any state change within the system can be tracked through event logs. Implements a decentralized private blockchain distributed ledger.
-
-The system can be used in applications requiring strong consistency and reliability, such as banking, auditing, and supply chain management. The project leverages **distributed systems principles**, **event sourcing**, and **functional programming** (OCaml) to create a robust and scalable solution.
-
+# OCaml Distributed Ledger with DAG Architecture 
+A high-performance, scalable distributed ledger implementation using Directed Acyclic Graph (DAG) architecture, written in OCaml. This project demonstrates advanced distributed systems concepts while achieving higher throughput and lower latency compared to traditional blockchain designs.
 
 
 ## Features:
+- **DAG-based Architecture:** 
+    - Parallel transaction processing through DAG structure.
+    - Advanced MCMC-based tip selection algorithm
+    - Sophisticated conflict resolution mechanism
+    - Dynamic vertex weighting system.
+- **Consensus Mechanism**
+    - Hybrid consensus protocol combining Avalanche-style subsampled voting, cumulative weight calculations and virtual voting.
 - **Cryptography:** Blockchain transactions are verified and trustworthy because of complex computations and cryptographic proof between the parties.
 - **Immutability:** Records in a blockchain can’t be modified or deleted.
 - **Provenance:** It’s possible to trace the origin of each transaction in the blockchain ledger.
@@ -26,12 +30,10 @@ The system can be used in applications requiring strong consistency and reliabil
         - Apply consensus rules to validate transactions.
         - Handle the addition of new blocks.
     - **Why OCaml?**: OCaml’s strong functional paradigm and immutability make it perfect for a blockchain-style system where consistency and immutability are crucial.
-2. **Consensus Mechanism (PBFT):**
-    - **Purpose**: Nodes communicate with each other to reach consensus, even if some nodes act maliciously or fail (Byzantine faults). A leader node proposes a block, and other nodes validate and agree on it.
-    - **Responsibilities**:
-        - Implement a consensus algorithm.
-        - Communicate between nodes to ensure no conflicting transactions.
-    - **Why PBFT?**: High throughput and low latency
+2. **Consensus Mechanism:**
+A hybrid approch was chosen to combine Avalanche consensus protocol and Byzantine Fault Tolerance.
+    - **Avalanche**: This was chosen as it is a high throughput, parallelizable protocol that is efficient at pruning the blockchain. 
+    -**Byzantine Fault Tolerance** This was chosen
 **Node Communication (gRPC):**
 
 - **Purpose**: Enable communication between nodes in the distributed ledger network.
