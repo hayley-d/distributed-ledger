@@ -19,8 +19,20 @@ type dag = {
     mutable verticies : (string, vertex) Hashtbl.t 
 }
 
+let create_dag () = {
+    verticies = Hashtbl.create 100 
+}
+
 let add_vertex dag vertex =
     Hashtbl.add dag.verticies vertex.id vertex
 
 let get_vertex dag id =
     Hashtbl.find_opt dag.verticies id
+
+let rec traverse_dag vertex f visited =
+    if not (Hashtbl.mem visited vertex.id) then (
+        Hashtbl.add visited vertex.id true;
+    f vertex;
+    List.iter (fun parent -> traverse_dag parent f visited) vertex.parents)
+
+let update_ancestors
