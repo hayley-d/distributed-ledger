@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package avalanche;
+
+// Transaction message
+message Transaction {
+  string id = 1;
+  string sender = 2;
+  bool chit = 2;
+  string data = 3;
+  string signature = 4;
+  float consectutive_success = 5;
+  int confidence = 6;
+}
+
+// Request to validators for their preference
+message PreferenceRequest {
+  Transaction transaction = 1;
+}
+
+// Validator's response indicating preference
+message PreferenceResponse {
+  string transaction_id = 1;
+  bool chit = 2;
+}
+
+// Service for transaction submission and validation
+service AvalancheService {
+  rpc SubmitTransaction (Transaction) returns (PreferenceResponse);
+  rpc QueryPreference (PreferenceRequest) returns (PreferenceResponse);
+}
+
