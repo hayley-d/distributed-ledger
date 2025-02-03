@@ -54,6 +54,11 @@ let update_confidence_and_success vertex tx_id threshold =
   let visited = Hashtbl.create 100 in
   traverse_dag vertex update_fn visited
 
+let verify_signature (pub_key: Rsa.pub) (payload: string) (signature: string) : bool =
+    let hashed_paylaod = hash (Cstruct.of_string payload) in
+let signature_cstruct = Cstruct.of_string signature in
+Rsa.PKCS1.verify ~hash:"SHA256" pub_key ~signature:signature_cstruct hashed_payload
+
 (* Example Usage *)
 let () =
   let tx1 = { id = "tx1"; valid = true; conflict_set = Some "set1"; confidence = 0; consecutive_success = 0; chit = false } in
