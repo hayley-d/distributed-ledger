@@ -5,7 +5,7 @@ A high-performance, scalable distributed ledger utilizing a Directed Acyclic Gra
 
 ## Features:
 - **DAG-based Architecture:** Transactions form a DAG rather than a linear chain, improving concurrency and scalability.
-- **Avalanche Consensus: **A robust, metastable consensus mechanism optimized for high throughput and transaction finality.
+- **Avalanche Consensus:** A robust, metastable consensus mechanism optimized for high throughput and transaction finality.
 - **Sybil Attack Resistance:** Utilizes staking mechanisms and network sampling to mitigate Sybil attacks.
 - **Asynchronous Transaction Processing:** Transactions are validated in parallel without a single leader bottleneck.
 - **Efficient State Propagation:** Optimized gossip protocol for rapid transaction dissemination across the network.
