@@ -11,7 +11,6 @@ A high-performance, scalable distributed ledger utilizing a Directed Acyclic Gra
 - **Efficient State Propagation:** Optimized gossip protocol for rapid transaction dissemination across the network.
 - **Decentralization:** Every member of the blockchain structure is able to access the entire distributed database.
 - **Distributed Consensus**: Implements a consensus algorithm to ensure that events are consistently applied across all nodes in a distributed environment.
-- 
 - **Scalable Architecture**: The system is designed to scale horizontally to handle high throughput and large datasets in a distributed environment.
 ### System Components:
 ### DAG-based Architecture:
