@@ -37,5 +37,6 @@ let query_transaction quorum =
     let yes_votes = List.fold_left (fun acc vote -> if vote then (acc + 1) else acc) 0 quorum in
     yes_votes > (List.length quorum / 2)
 
+(* Updates all *)
 let rec update_ancestors transaction =
     transaction.confidence
