@@ -1,0 +1,4 @@
+(executable
+ (public_name query_engine)
+ (name main)
+ (libraries query_engine yojson str))
