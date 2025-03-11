@@ -1,4 +1,4 @@
-(* Block Type *)
+(* Block Type   *)
     type block = {
     index : int;
     previous_hash: string;
