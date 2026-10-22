@@ -14,29 +14,6 @@ let load_config () =
         read_lines []
     with _ -> []
 
-
-(* Transaciton type for consensus determination *)
-type transaction = {
-    id : string;
-    data : string;
-    parents : transaction list;
-    mutable chit: bool;
-    mutable confidence : int;
-    mutable consecutive_success : int;
-}
-
-(* Initialize a Snowball instance *)
-let create (transaction : transaction) (initial_preference: bool) = {
-    transaction;
-    chit = initial_preference;
-    confidence = 0;
-    consecutive_success = 0;
-}
-
 let query_transaction quorum =
     let yes_votes = List.fold_left (fun acc vote -> if vote then (acc + 1) else acc) 0 quorum in
     yes_votes > (List.length quorum / 2)
-
-(* Updates all *)
-let rec update_ancestors transaction =
-    transaction.confidence

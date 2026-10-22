@@ -4,10 +4,10 @@
  (libraries grpc-lwt digestif lwt unix mirage-crypto-pk pbrt))
 
 (rule
- (targets transaction_pb.proto transaction_pb.ml transaction_pb.mli)
+ (targets avalanche_pb.proto avalanche_pb.ml avalanche_pb.mli)
  (deps
-  (:proto ../proto/transaction.proto))
+  (:proto ../proto/avalanche.proto))
  (action
   (progn
-   (copy %{proto} transaction_pb.proto)
-   (run ocaml-protoc --binary --ml_out . transaction_pb.proto))))
+   (copy %{proto} avalanche_pb.proto)
+   (run ocaml-protoc --binary --ml_out . avalanche_pb.proto))))

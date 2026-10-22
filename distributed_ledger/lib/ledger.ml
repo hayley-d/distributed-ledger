@@ -1,58 +1,50 @@
-type transaction = {
-    id : string;
-    data: string;
-    signature: string;
-    mutable chit: bool;
-    mutable confidence: float;
-    mutable consecutive_success: int;
-}
+type vertex_state = { vertex : Vertex.t; mutable chit : bool }
 
-type vertex = {
-    id: string;
-    transaction: transaction;
-    parents: vertex list;
-    mutable accepted: bool;
+type conflict_set = {
+  mutable members : string list;
+  mutable preferred : string;
+  mutable last : string;
+  mutable count : int;
 }
-
 
 type dag = {
-    mutable verticies : (string, vertex) Hashtbl.t 
+  vertices : (string, vertex_state) Hashtbl.t;
+  conflict_sets : (string, conflict_set) Hashtbl.t;
+  accepted : (string, bool) Hashtbl.t;
 }
 
-let create_dag () = {
-    verticies = Hashtbl.create 100 
-}
+let add_vertex dag (vertex : Vertex.t) =
+  if not (Hashtbl.mem dag.vertices vertex.identifier) then
+    Hashtbl.replace dag.vertices vertex.identifier { vertex; chit = false }
 
-let add_vertex dag vertex =
-    Hashtbl.add dag.verticies vertex.id vertex
-
-let get_vertex dag id =
-    Hashtbl.find_opt dag.verticies id
-
-let rec traverse_dag vertex f visited =
-    if not (Hashtbl.mem visited vertex.id) then (
-        Hashtbl.add visited vertex.id true;
-    f vertex;
-    List.iter (fun parent -> traverse_dag parent f visited) vertex.parents)
-
-(* Update Confidence and Consecutive Success for Ancestors *)
-let update_confidence_and_success vertex tx_id threshold =
-  let update_fn v =
-    List.iter (fun tx ->
-      if tx.id = tx_id then (
-        tx.confidence <- tx.confidence + 1;
-        if tx.confidence >= threshold then (
-          tx.consecutive_success <- tx.consecutive_success + 1;
-          tx.chit <- true;
-          if tx.consecutive_success >= threshold then (
-            v.accepted <- Some true
-          )
-        )
-      )
-    ) v.transactions
+let create_dag () =
+  let dag =
+    {
+      vertices = Hashtbl.create 100;
+      conflict_sets = Hashtbl.create 100;
+      accepted = Hashtbl.create 100;
+    }
   in
+  add_vertex dag Vertex.genesis;
+  dag
+
+let get_vertex dag identifier = Hashtbl.find_opt dag.vertices identifier
+
+let traverse_ancestors dag (vertex : Vertex.t) visit =
   let visited = Hashtbl.create 100 in
-  traverse_dag vertex update_fn visited
+  let pending = Queue.of_seq (List.to_seq vertex.parents) in
+  while not (Queue.is_empty pending) do
+    let identifier = Queue.pop pending in
+    if not (Hashtbl.mem visited identifier) then (
+      Hashtbl.add visited identifier ();
+      match get_vertex dag identifier with
+      | Some vertex_state ->
+          visit vertex_state;
+          List.iter
+            (fun parent -> Queue.push parent pending)
+            vertex_state.vertex.parents
+      | None -> ())
+  done
 
 let verify_signature (pub_key: Rsa.pub) (payload: string) (signature: string) : bool =
     let hashed_paylaod = hash (Cstruct.of_string payload) in
