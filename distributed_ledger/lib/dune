@@ -1,5 +1,13 @@
 (library
  (name distributed_dag_blockchain)
  (public_name distributed_dag_blockchain)
- (libraries grpc-lwt digestif lwt rocksdb)
- )
+ (libraries grpc-lwt digestif lwt unix mirage-crypto-pk pbrt))
+
+(rule
+ (targets transaction_pb.proto transaction_pb.ml transaction_pb.mli)
+ (deps
+  (:proto ../proto/transaction.proto))
+ (action
+  (progn
+   (copy %{proto} transaction_pb.proto)
+   (run ocaml-protoc --binary --ml_out . transaction_pb.proto))))

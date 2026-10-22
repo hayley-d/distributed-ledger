@@ -13,14 +13,23 @@
 
 (license MIT)
 
-(documentation https://url/to/documentation)
+(documentation https://github.com/hayley-d/distributed-ledger)
 
 (package
  (name distributed_dag_blockchain)
- (synopsis "Distributed decentralized DAG-based blockchin implemented in OCaml")
- (description "A longer description")
- (depends ocaml)
+ (synopsis "Distributed decentralized DAG-based blockchain implemented in OCaml")
+ (description
+  "A distributed ledger that stores transactions in a directed acyclic graph and reaches agreement using the Avalanche consensus protocol, with nodes communicating over gRPC.")
+ (depends
+  (ocaml
+   (>= 5.2))
+  lwt
+  digestif
+  grpc-lwt
+  mirage-crypto-pk
+  mirage-crypto-rng
+  ocaml-protoc
+  pbrt
+  (alcotest :with-test))
  (tags
-  ("add topics" "to describe" your project)))
-
-; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
+  (blockchain dag avalanche consensus distributed-systems)))
