@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package avalanche;
+
+message Transaction {
+  string identifier = 1;
+  string conflict_key = 2;
+  bytes data = 3;
+  bytes public_key = 4;
+  bytes signature = 5;
+}
+
+message Vertex {
+  string identifier = 1;
+  repeated string parents = 2;
+  repeated Transaction transactions = 3;
+}
+
+message PreferenceRequest {
+  Vertex vertex = 1;
+}
+
+message PreferenceResponse {
+  string vertex_identifier = 1;
+  bool preferred = 2;
+}
+
+message GetVerticesRequest {
+  repeated string identifiers = 1;
+}
+
+message GetVerticesResponse {
+  repeated Vertex vertices = 1;
+}
+
+service AvalancheService {
+  rpc SubmitTransaction (Transaction) returns (PreferenceResponse);
+  rpc QueryPreference (PreferenceRequest) returns (PreferenceResponse);
+  rpc GetVertices (GetVerticesRequest) returns (GetVerticesResponse);
+}
