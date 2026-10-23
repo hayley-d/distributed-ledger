@@ -1,3 +1,9 @@
 (test
  (name test_distributed_ledger)
- (libraries distributed_dag_blockchain alcotest))
+ (libraries
+  distributed_dag_blockchain
+  alcotest
+  qcheck-core
+  qcheck-alcotest
+  mirage-crypto-rng.unix
+  unix))

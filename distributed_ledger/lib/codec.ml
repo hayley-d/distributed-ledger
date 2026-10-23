@@ -51,3 +51,5 @@ let decode_vertex encoded =
   | message -> vertex_of_protobuf message
   | exception Pbrt.Decoder.Failure error ->
       Error (Pbrt.Decoder.error_to_string error)
+  | exception Invalid_argument message ->
+      Error (Printf.sprintf "malformed vertex encoding: %s" message)
