@@ -56,6 +56,18 @@ The Avalanche consensus mechanism provides probabilistic finality with the follo
 - **Low Latency Consensus:** Avalanche achieves sub-second finality for most transactions.
 - **Reduced Overhead:** Efficient querying reduces the cost of network communication.
 
+## Development
+Git hooks are managed with [lefthook](https://github.com/evilmartians/lefthook). Install `lefthook`, then run once from the repository root:
+
+```sh
+lefthook install
+```
+
+- **pre-commit:** formats staged `.ml`/`.mli` files with `ocamlformat` and re-stages them, then runs `dune build` and `dune runtest` in `distributed_ledger/`.
+- **commit-msg:** rejects messages that are not [conventional commits](https://www.conventionalcommits.org/).
+
+Hooks run through `opam exec --`, so the local `_opam` switch in `distributed_ledger/` must be set up. Use `git commit --no-verify` to bypass them in an emergency.
+
 
 
 
