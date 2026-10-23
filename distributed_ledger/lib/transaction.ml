@@ -37,3 +37,28 @@ let decode_public_key encoded =
       | Error (`Msg message) -> Error message)
   | Ok _ -> Error "public key must contain exactly a modulus and an exponent"
   | Error message -> Error message
+
+let sign ~private_key ~conflict_key ~data =
+  let public_key =
+    encode_public_key (Mirage_crypto_pk.Rsa.pub_of_priv private_key)
+  in
+  let identifier = compute_identifier ~conflict_key ~data ~public_key in
+  let signature =
+    Mirage_crypto_pk.Rsa.PKCS1.sign ~hash:`SHA256 ~key:private_key
+      (`Message identifier)
+  in
+  { identifier; conflict_key; data; public_key; signature }
+
+let verify transaction =
+  let expected_identifier =
+    compute_identifier ~conflict_key:transaction.conflict_key
+      ~data:transaction.data ~public_key:transaction.public_key
+  in
+  transaction.identifier = expected_identifier
+  &&
+  match decode_public_key transaction.public_key with
+  | Error _ -> false
+  | Ok key ->
+      Mirage_crypto_pk.Rsa.PKCS1.verify
+        ~hashp:(fun hash -> hash = `SHA256)
+        ~key ~signature:transaction.signature (`Message transaction.identifier)

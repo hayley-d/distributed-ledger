@@ -21,6 +21,7 @@ depends: [
   "mirage-crypto-rng"
   "ocaml-protoc"
   "pbrt"
+  "lmdb"
   "alcotest" {with-test}
   "odoc" {with-doc}
 ]
