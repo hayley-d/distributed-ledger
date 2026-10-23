@@ -30,6 +30,7 @@
   mirage-crypto-rng
   ocaml-protoc
   pbrt
+  lmdb
   (alcotest :with-test))
  (tags
   (blockchain dag avalanche consensus distributed-systems)))

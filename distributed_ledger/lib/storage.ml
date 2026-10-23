@@ -1,39 +1,28 @@
-open Rocksdb
-open Transaction_pb
+type database = {
+  environment : Lmdb.Env.t;
+  vertices : (string, string, [ `Uni ]) Lmdb.Map.t;
+}
 
-let db = Rocksdb.open_db "transactions.db"
+let map_size = 1024 * 1024 * 1024
 
-(* Serialoze Transaction to Protobuf *)
-let serialize_transaction (tx: transaction) : string =
-    let proto_tx = Transaction_pb.Transaction.{
-        id = tx.id;
-        chit = tx.chit;
-        parents = List.map (fun p -> p.id) tx.parents;
-        accepted = (match tx.accepted with Some true -> true | _ -> false);
-    } in
-Transaction_pb.Transaction.to_string proto_tx
+let open_database ~path =
+  if not (Sys.file_exists path) then Sys.mkdir path 0o755;
+  let environment = Lmdb.Env.create Lmdb.Rw ~map_size path in
+  let vertices =
+    Lmdb.Map.create Lmdb.Map.Nodup ~key:Lmdb.Conv.string ~value:Lmdb.Conv.string
+      environment
+  in
+  { environment; vertices }
 
-(* Deserialize Protobuf to Transaction *)
-let deserialize_transaction (data: string) : transaction =
-    let proto_tx = Transaction_pb.Transaction.of_string data in
-    {
-        id = proto_tx.id;
-        chit = proto_tx.chit;
-        parents = proto_tx.parents;
-        accepted = proto_tx.accepted;
-    }
+let close_database database = Lmdb.Env.close database.environment
 
+let store_vertex database (vertex : Vertex.t) =
+  try
+    Lmdb.Map.add database.vertices vertex.identifier
+      (Codec.encode_vertex vertex)
+  with Lmdb.Exists -> ()
 
-(* Store transaction in RocksDB *)
-let store_transaction db (tx: transaction) =
-    let key = "tx:" ^ tx.id in
-    let value = serialize_transaction tx in 
-    Rocksdb.put db key value
-
-(* Reteieve Transaction from RocksDB *)
-let get_transaction db (tx_id: string) : transaction option =
-    match Rocksdb.get db ("tx:" ^ tx_id) with
-        | Some value -> Some (deserialize_transaction value)
-        | None -> None
-
-
+let find_vertex database identifier =
+  match Lmdb.Map.get database.vertices identifier with
+  | encoded -> Result.map Option.some (Codec.decode_vertex encoded)
+  | exception Lmdb.Not_found -> Ok None

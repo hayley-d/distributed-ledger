@@ -1,7 +1,7 @@
 (library
  (name distributed_dag_blockchain)
  (public_name distributed_dag_blockchain)
- (libraries grpc-lwt digestif lwt unix mirage-crypto-pk pbrt))
+ (libraries grpc-lwt digestif lwt unix mirage-crypto-pk pbrt lmdb))
 
 (rule
  (targets avalanche_pb.proto avalanche_pb.ml avalanche_pb.mli)

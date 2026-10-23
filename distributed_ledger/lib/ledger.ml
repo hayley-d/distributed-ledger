@@ -45,25 +45,3 @@ let traverse_ancestors dag (vertex : Vertex.t) visit =
             vertex_state.vertex.parents
       | None -> ())
   done
-
-let verify_signature (pub_key: Rsa.pub) (payload: string) (signature: string) : bool =
-    let hashed_paylaod = hash (Cstruct.of_string payload) in
-let signature_cstruct = Cstruct.of_string signature in
-Rsa.PKCS1.verify ~hash:"SHA256" pub_key ~signature:signature_cstruct hashed_payload
-
-(* Example Usage *)
-let () =
-  let tx1 = { id = "tx1"; valid = true; conflict_set = Some "set1"; confidence = 0; consecutive_success = 0; chit = false } in
-  let tx2 = { id = "tx2"; valid = true; conflict_set = Some "set1"; confidence = 0; consecutive_success = 0; chit = false } in
-  let v1 = { id = "v1"; transactions = [tx1]; parents = []; accepted = None } in
-  let v2 = { id = "v2"; transactions = [tx2]; parents = [v1]; accepted = None } in
-
-  let dag = create_dag () in
-  add_vertex dag v1;
-  add_vertex dag v2;
-
-  update_confidence_and_success v2 "tx1" 2;
-
-  Printf.printf "Transaction tx1 confidence: %d, consecutive_success: %d, chit: %b\n" tx1.confidence tx1.consecutive_success tx1.chit;
-  Printf.printf "Transaction tx2 confidence: %d, consecutive_success: %d, chit: %b\n" tx2.confidence tx2.consecutive_success tx2.chit
-
