@@ -1,0 +1,22 @@
+pre-commit:
+  piped: true
+  commands:
+    format:
+      priority: 1
+      root: "distributed_ledger/"
+      glob: "*.{ml,mli}"
+      run: opam exec -- ocamlformat --inplace {staged_files}
+      stage_fixed: true
+    build:
+      priority: 2
+      root: "distributed_ledger/"
+      run: opam exec -- dune build
+    test:
+      priority: 3
+      root: "distributed_ledger/"
+      run: opam exec -- dune runtest
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: scripts/check-commit-message.sh {1}
