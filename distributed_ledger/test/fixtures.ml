@@ -2,12 +2,17 @@ open Distributed_dag_blockchain
 
 let initialise_random_generator = lazy (Mirage_crypto_rng_unix.use_default ())
 
-let generate_private_key () =
+let generate_private_key ~seed =
   Lazy.force initialise_random_generator;
-  Mirage_crypto_pk.Rsa.generate ~bits:2048 ()
+  let generator =
+    Mirage_crypto_rng.create ~seed (module Mirage_crypto_rng.Fortuna)
+  in
+  Mirage_crypto_pk.Rsa.generate ~g:generator ~bits:2048 ()
 
-let private_key = lazy (generate_private_key ())
-let other_private_key = lazy (generate_private_key ())
+let private_key = lazy (generate_private_key ~seed:"fixture private key")
+
+let other_private_key =
+  lazy (generate_private_key ~seed:"fixture other private key")
 
 let signed_transaction ?(conflict_key = "coin") ?(data = "pay alice") () =
   Transaction.sign ~private_key:(Lazy.force private_key) ~conflict_key ~data

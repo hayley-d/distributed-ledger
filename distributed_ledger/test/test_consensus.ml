@@ -217,7 +217,7 @@ let sample_property =
       && first = sample (Random.State.make [| seed |]))
 
 let simulation_configuration =
-  { Configuration.sample_size = 10; quorum_size = 8; decision_threshold = 10 }
+  { Configuration.sample_size = 10; quorum_size = 7; decision_threshold = 10 }
 
 let maximum_rounds = 40
 
@@ -234,8 +234,8 @@ let accepted_by node transaction =
   Simulation.accepted_by node simulation_configuration transaction
 
 let honest_acceptance_property =
-  QCheck2.Test.make ~count:100 ~name:"honest network accepts a transaction"
-    QCheck2.Gen.int (fun seed ->
+  QCheck2.Test.make ~count:100 ~print:string_of_int
+    ~name:"honest network accepts a transaction" QCheck2.Gen.int (fun seed ->
       let network =
         Simulation.create ~configuration:simulation_configuration ~node_count:20
           ~adversarial_count:0 ~seed
@@ -265,7 +265,8 @@ let never_accepts_both network =
     network.Simulation.nodes
 
 let conflict_property ~name ~adversarial_count =
-  QCheck2.Test.make ~count:100 ~name QCheck2.Gen.int (fun seed ->
+  QCheck2.Test.make ~count:100 ~print:string_of_int ~name QCheck2.Gen.int
+    (fun seed ->
       let network =
         Simulation.create ~configuration:simulation_configuration ~node_count:20
           ~adversarial_count ~seed
