@@ -5,5 +5,7 @@
   alcotest
   qcheck-core
   qcheck-alcotest
+  lwt
+  lwt.unix
   mirage-crypto-rng.unix
   unix))
